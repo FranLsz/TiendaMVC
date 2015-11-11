@@ -34,9 +34,12 @@ namespace TiendaMVC.Models
         [DataType(DataType.MultilineText)]
         public string descripcion { get; set; }
 
-        [DisplayName("Precio de coste")]
+        [DisplayName("Precio de venta")]
         [DataType(DataType.Currency)]
         public decimal precioVenta { get; set; }
+
+        [DisplayName("Precio de coste")]
+        [DataType(DataType.Currency)]
         public decimal precioCoste { get; set; }
 
         public string fabricante { get; set; }
