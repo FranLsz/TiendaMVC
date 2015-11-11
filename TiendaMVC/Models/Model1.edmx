@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Tienda15Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ciudad" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cp" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenProducto">
+          <Key>
+            <PropertyRef Name="idAlmacen" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idAlmacen" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+          <Property Name="existencias" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Etiqueta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EtiquetaProducto">
+          <Key>
+            <PropertyRef Name="idEtiqueta" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idEtiqueta" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="fabricante" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precioVenta" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="precioCoste" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="categoria" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_almacenProducto_almacen_id">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="AlmacenProducto" Type="Self.AlmacenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AlmacenProducto">
+              <PropertyRef Name="idAlmacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_almacenProducto_producto_id">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="AlmacenProducto" Type="Self.AlmacenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AlmacenProducto">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_etiquetaProducto_etiqueta_id">
+          <End Role="Etiqueta" Type="Self.Etiqueta" Multiplicity="1" />
+          <End Role="EtiquetaProducto" Type="Self.EtiquetaProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etiqueta">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EtiquetaProducto">
+              <PropertyRef Name="idEtiqueta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_etiquetaProducto_producto_id">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="EtiquetaProducto" Type="Self.EtiquetaProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EtiquetaProducto">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_categoria_id">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Tienda15ModelStoreContainer">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenProducto" EntityType="Self.AlmacenProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Etiqueta" EntityType="Self.Etiqueta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EtiquetaProducto" EntityType="Self.EtiquetaProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_almacenProducto_almacen_id" Association="Self.FK_almacenProducto_almacen_id">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="AlmacenProducto" EntitySet="AlmacenProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_almacenProducto_producto_id" Association="Self.FK_almacenProducto_producto_id">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="AlmacenProducto" EntitySet="AlmacenProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_etiquetaProducto_etiqueta_id" Association="Self.FK_etiquetaProducto_etiqueta_id">
+            <End Role="Etiqueta" EntitySet="Etiqueta" />
+            <End Role="EtiquetaProducto" EntitySet="EtiquetaProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_etiquetaProducto_producto_id" Association="Self.FK_etiquetaProducto_producto_id">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="EtiquetaProducto" EntitySet="EtiquetaProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_categoria_id" Association="Self.FK_producto_categoria_id">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Tienda15Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ciudad" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AlmacenProducto" Relationship="Self.FK_almacenProducto_almacen_id" FromRole="Almacen" ToRole="AlmacenProducto" />
+        </EntityType>
+        <EntityType Name="AlmacenProducto">
+          <Key>
+            <PropertyRef Name="idAlmacen" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idAlmacen" Type="Int32" Nullable="false" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <Property Name="existencias" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK_almacenProducto_almacen_id" FromRole="AlmacenProducto" ToRole="Almacen" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_almacenProducto_producto_id" FromRole="AlmacenProducto" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_producto_categoria_id" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Etiqueta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.EtiquetaProducto" FromRole="Etiqueta" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fabricante" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precioVenta" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="precioCoste" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="categoria" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AlmacenProducto" Relationship="Self.FK_almacenProducto_producto_id" FromRole="Producto" ToRole="AlmacenProducto" />
+          <NavigationProperty Name="Categoria1" Relationship="Self.FK_producto_categoria_id" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Etiqueta" Relationship="Self.EtiquetaProducto" FromRole="Producto" ToRole="Etiqueta" />
+        </EntityType>
+        <Association Name="FK_almacenProducto_almacen_id">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="AlmacenProducto" Type="Self.AlmacenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AlmacenProducto">
+              <PropertyRef Name="idAlmacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_almacenProducto_producto_id">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="AlmacenProducto" Type="Self.AlmacenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AlmacenProducto">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_categoria_id">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EtiquetaProducto">
+          <End Role="Etiqueta" Type="Self.Etiqueta" Multiplicity="*" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Tienda15Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" />
+          <EntitySet Name="AlmacenProducto" EntityType="Self.AlmacenProducto" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Etiqueta" EntityType="Self.Etiqueta" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <AssociationSet Name="FK_almacenProducto_almacen_id" Association="Self.FK_almacenProducto_almacen_id">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="AlmacenProducto" EntitySet="AlmacenProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_almacenProducto_producto_id" Association="Self.FK_almacenProducto_producto_id">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="AlmacenProducto" EntitySet="AlmacenProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_categoria_id" Association="Self.FK_producto_categoria_id">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="EtiquetaProducto" Association="Self.EtiquetaProducto">
+            <End Role="Etiqueta" EntitySet="Etiqueta" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Tienda15ModelStoreContainer" CdmEntityContainer="Tienda15Entities">
+          <EntitySetMapping Name="Almacen">
+            <EntityTypeMapping TypeName="Tienda15Model.Almacen">
+              <MappingFragment StoreEntitySet="Almacen">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="cp" ColumnName="cp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlmacenProducto">
+            <EntityTypeMapping TypeName="Tienda15Model.AlmacenProducto">
+              <MappingFragment StoreEntitySet="AlmacenProducto">
+                <ScalarProperty Name="idAlmacen" ColumnName="idAlmacen" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="existencias" ColumnName="existencias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="Tienda15Model.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Etiqueta">
+            <EntityTypeMapping TypeName="Tienda15Model.Etiqueta">
+              <MappingFragment StoreEntitySet="Etiqueta">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="Tienda15Model.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fabricante" ColumnName="fabricante" />
+                <ScalarProperty Name="precioVenta" ColumnName="precioVenta" />
+                <ScalarProperty Name="precioCoste" ColumnName="precioCoste" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EtiquetaProducto" TypeName="Tienda15Model.EtiquetaProducto" StoreEntitySet="EtiquetaProducto">
+            <EndProperty Name="Etiqueta">
+              <ScalarProperty Name="id" ColumnName="idEtiqueta" />
+            </EndProperty>
+            <EndProperty Name="Producto">
+              <ScalarProperty Name="id" ColumnName="idProducto" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
