@@ -14,6 +14,8 @@
         @Html.DisplayFor(o=>item.nombre)
         <br/>
         @Html.ActionLink("Ver", "Detalle", new {id=item.id})
+        @Html.ActionLink("Editar", "Update", new {id=item.id})
+        @Html.ActionLink("Borrar", "Delete", new {id=item.id})
     </div>
 }
 

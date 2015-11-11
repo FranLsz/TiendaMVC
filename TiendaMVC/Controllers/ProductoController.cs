@@ -49,10 +49,67 @@ namespace TiendaMVC.Controllers
         {
             var model = db.Producto.FirstOrDefault(o => o.id == id);
 
-            if(model!=null)
-            return View(model);
+            if (model != null)
+                return View(model);
 
             return HttpNotFound();
         }
+
+
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            var model = db.Producto.FirstOrDefault(o => o.id == id);
+
+            if (model != null)
+                return View(model);
+
+            return HttpNotFound();
+        }
+
+
+        [HttpPost]
+        public ActionResult UpdatePost(Producto model)
+        {
+            var m = db.Producto.FirstOrDefault(o => o.id == model.id);
+
+            if (m == null)
+                return HttpNotFound();
+
+            if (ModelState.IsValid)
+            {
+                m.nombre = model.nombre;
+                m.fabricante = model.fabricante;
+                m.precioVenta = model.precioVenta;
+                m.precioCoste = model.precioCoste;
+                m.categoria = model.categoria;
+            }
+
+            db.SaveChanges();
+
+            return View();
+        }
+
+
+
+
+
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var model = db.Producto.FirstOrDefault(o => o.id == id);
+
+            if (model != null)
+            {
+                db.Producto.Remove(model);
+                // db.SaveChanges();
+                return View();
+            }
+
+            return HttpNotFound();
+        }
+
+
     }
 }
