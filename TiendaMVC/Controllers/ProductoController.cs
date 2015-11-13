@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ namespace TiendaMVC.Controllers
 {
     public class ProductoController : Controller
     {
-        Tienda15Entities db = new Tienda15Entities();
+        private Tienda15Entities db = new Tienda15Entities();
 
         public ActionResult Index()
         {
@@ -78,11 +79,7 @@ namespace TiendaMVC.Controllers
 
             if (ModelState.IsValid)
             {
-                m.nombre = model.nombre;
-                m.fabricante = model.fabricante;
-                m.precioVenta = model.precioVenta;
-                m.precioCoste = model.precioCoste;
-                m.categoria = model.categoria;
+                db.Entry(model).State = EntityState.Modified;
             }
 
             db.SaveChanges();

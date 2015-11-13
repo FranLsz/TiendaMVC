@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace TiendaMVC.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Almacen
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,11 +22,18 @@ namespace TiendaMVC.Models
         {
             this.AlmacenProducto = new HashSet<AlmacenProducto>();
         }
-    
+        [DisplayName("ID")]
         public int id { get; set; }
+
+        [Required]
+        [DisplayName("Ciudad")]
         public string ciudad { get; set; }
+
+        [Required]
+        [RegularExpression(@"\d{5}", ErrorMessage = "El código postal debe tener 5 dígitos")]
+        [DisplayName("Código postal")]
         public string cp { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenProducto> AlmacenProducto { get; set; }
     }

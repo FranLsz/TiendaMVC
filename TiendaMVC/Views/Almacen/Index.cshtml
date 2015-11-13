@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TiendaMVC.Models.Almacen>
+
+@{
+    ViewBag.Title = "Listado de almacenes";
+}
+
+<h2>Listado de almacenes</h2>
+
+<style>
+    .boxItem {
+        width: 200px;
+        height: 100px;
+        display: inline-block;
+        margin: 30px;
+        padding: 10px;
+        border-radius: 3px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+</style>
+
+<p>
+    @Html.ActionLink("Nuevo almacen", "Alta")
+</p>
+<div class="boxContainer">
+    @foreach (var item in Model)
+    {
+        <div class="boxItem">
+            @Html.DisplayNameFor(model => model.id):
+            @Html.DisplayFor(modelItem => item.id)<br />
+
+            @Html.DisplayNameFor(model => model.ciudad):
+            @Html.DisplayFor(modelItem => item.ciudad)<br />
+
+            @Html.DisplayNameFor(model => model.cp):
+            @Html.DisplayFor(modelItem => item.cp)<br />
+            @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.id })
+        </div>
+    }
+
+</div>
