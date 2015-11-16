@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TiendaMVC.Filters;
 using TiendaMVC.Models;
 
 namespace TiendaMVC.Controllers
@@ -41,7 +42,7 @@ namespace TiendaMVC.Controllers
             return View(model);
         }
 
-
+        [FiltroId]
         public ActionResult Delete(int id)
         {
             var model = db.Almacen.FirstOrDefault(o => o.id == id);
@@ -60,6 +61,7 @@ namespace TiendaMVC.Controllers
             return View();
         }
         [HttpGet]
+        [FiltroId]
         public ActionResult Edit(int id)
         {
             var model = db.Almacen.FirstOrDefault(o => o.id == id);
