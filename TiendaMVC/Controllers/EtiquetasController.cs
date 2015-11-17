@@ -8,11 +8,11 @@ using TiendaMVC.Models;
 
 namespace TiendaMVC.Controllers
 {
-    public class EtiquetasController : Controller
+    public class EtiquetasController : BaseController
     {
         Tienda15Entities db = new Tienda15Entities();
 
-        [FiltroTiempo]
+        //[FiltroTiempo]
         // GET: Etiquetas
         public ActionResult Index()
         {

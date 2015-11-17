@@ -46,14 +46,15 @@ namespace TiendaMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Detalle(int id)
+        public ActionResult Detalle(String nombre)
         {
-            var model = db.Producto.FirstOrDefault(o => o.id == id);
+            var nom = nombre.Replace("_", " ");
+            var model = db.Producto.FirstOrDefault(o => o.nombre == nom);
 
             if (model != null)
                 return View(model);
 
-            return HttpNotFound();
+            return RedirectToAction("Index");
         }
 
 
