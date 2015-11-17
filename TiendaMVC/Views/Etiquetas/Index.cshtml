@@ -1,0 +1,37 @@
+﻿@using TiendaMVC.Models
+@model IEnumerable<TiendaMVC.Models.Etiqueta>
+
+@{
+    ViewBag.Title = "title";
+
+    var alm = ViewBag.Almacenes as IEnumerable<Almacen>;
+}
+
+<div class="col-md-9">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <h2>@item.nombre</h2>
+            <ul>
+                @foreach (var pro in item.Producto)
+                {
+                    <li>@pro.nombre</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+<div class="col-md-3">
+    <h1>Almacenes</h1>
+    <ul>
+
+        @foreach (var almacen in alm)
+        {
+            <li>@almacen.ciudad</li>
+        }
+    </ul>
+</div>
+
+
+
